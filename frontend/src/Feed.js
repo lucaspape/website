@@ -12,7 +12,7 @@ class Feed extends Component {
 
   render(){
     if(this.state.updateRequired === true){
-      const postsUrl = 'http://localhost:8080/posts';
+      const postsUrl = 'https://api.lucaspape.de/lucaspape/posts';
 
       axios.get(postsUrl).then(({data}) => {
         var newPosts = [];

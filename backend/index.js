@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 const PORT = 80;
-const PREFIX = '/';
+const PREFIX = '/lucaspape';
 
 const app = express();
 app.use(bodyParser.json());
