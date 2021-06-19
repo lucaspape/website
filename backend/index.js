@@ -19,6 +19,8 @@ database.connect((err)=>{
       });
 
       app.get(PREFIX + 'posts', (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+
         var {skip, limit} = req.query;
 
         if(!skip){
@@ -49,6 +51,8 @@ database.connect((err)=>{
       });
 
       app.post(PREFIX + 'posts', (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+
         database.checkPermissions(req.cookies.sid, (err, result) => {
           if(err){
             res.status(500).send("Internal Server Error");
@@ -67,6 +71,8 @@ database.connect((err)=>{
       });
 
       app.post(PREFIX + 'users/login', (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+
         database.login(req.body.username, req.body.password, (err, result)=>{
           if(err){
             console.log(err);
@@ -79,6 +85,8 @@ database.connect((err)=>{
       });
 
       app.post(PREFIX + 'users/register', (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        
         database.register(req.body.username, req.body.password, (err, result)=>{
           if(err){
             console.log(err);
