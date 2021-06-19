@@ -1,0 +1,24 @@
+div.feed {
+  position: relative;
+  display: block;
+
+  max-width:100%;
+  max-height:100%;
+
+  width: 50%;
+  min-width: 30%;
+
+  margin: auto;
+}
+
+img {
+  position: relative;
+  width: 100%;
+  height: auto;
+
+  display: block;
+  margin: auto;
+  text-align: center;
+
+  float: right;
+}
