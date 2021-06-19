@@ -14,6 +14,10 @@ database.connect((err)=>{
     if(err){
       console.log(err);
     }else{
+      app.get(PREFIX, req(res) => {
+        res.send('Hello World');
+      });
+
       app.get(PREFIX + 'posts', (req, res) => {
         var {skip, limit} = req.query;
 
