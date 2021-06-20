@@ -192,7 +192,7 @@ module.exports = {
     mysqlConnection.query(INSERT_PAGE_QUERY, callback);
   },
 
-  deletePage: function(pagId, callback){
+  deletePage: function(pageId, callback){
     const DELETE_PAGE_QUERY = 'DELETE FROM `' + DBNAME + '`.`pages` WHERE id = "' + pageId + '";';
 
     mysqlConnection.query(DELETE_PAGE_QUERY, callback);
