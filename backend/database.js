@@ -140,5 +140,33 @@ module.exports = {
         }
       }
     });
+  },
+
+  getUser: function(sid, callback){
+    const SESSION_QUERY = 'SELECT * FROM `' + DBNAME + '`.`sessions` WHERE id = "' + sid + '";';
+
+    mysqlConnection.query(SESSION_QUERY, (err, result) => {
+      if(err){
+        callback(err, undefined);
+      }else{
+        if(result[0]){
+          const USER_QUERY = 'SELECT id, name, password, permissions FROM `' + DBNAME + '`.`users` WHERE name = "' + result[0].username + '";';
+
+           mysqlConnection.query(USER_QUERY, (err, result) => {
+             if(err){
+               callback(err, undefined);
+             }else{
+               if(result[0]){
+                 callback(undefined, result[0]);
+               }else{
+                 callback('Could not find user', undefined);
+               }
+             }
+           });
+        }else{
+          callback(undefined, []);
+        }
+      }
+    });
   }
 };

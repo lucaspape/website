@@ -59,6 +59,7 @@ database.connect((err)=>{
           }else if(result.includes('create_post')){
             database.insertPost(req.body.author, req.body.content_type, req.body.content, (err,result) => {
               if(err){
+                console.log(err);
                 res.status(500).send("Internal Server Error");
               }else{
                 res.send('Success');
@@ -70,7 +71,20 @@ database.connect((err)=>{
         });
       });
 
-      app.post(PREFIX + 'users/login', (req, res) => {
+      app.get(PREFIX + 'user', (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+
+        database.getUser(req.cookies.sid, (err, result) => {
+          if(err){
+            console.log(err);
+            res.status(500).send("Internal Server Error");
+          }else{
+            res.send({results: result});
+          }
+        });
+      });
+
+      app.post(PREFIX + 'user/login', (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
 
         database.login(req.body.username, req.body.password, (err, result)=>{
@@ -84,9 +98,9 @@ database.connect((err)=>{
         });
       });
 
-      app.post(PREFIX + 'users/register', (req, res) => {
+      app.post(PREFIX + 'user/register', (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
-        
+
         database.register(req.body.username, req.body.password, (err, result)=>{
           if(err){
             console.log(err);
