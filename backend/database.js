@@ -53,7 +53,7 @@ module.exports = {
     });
   },
 
-  getPosts: function(skip, limit, pageId, callback){
+  getPosts: function(pageId, skip, limit, callback){
     const POSTS_QUERY = 'SELECT * FROM `' + DBNAME + '`.`posts` ORDER BY timestamp DESC LIMIT ' + mysqlConnection.escape(skip) + ', ' + mysqlConnection.escape(limit) + ' WHERE pageId = "' + pageId + '";';
 
     mysqlConnection.query(POSTS_QUERY, callback);
