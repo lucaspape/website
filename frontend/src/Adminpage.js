@@ -29,10 +29,19 @@ class Adminpage extends Component {
   }
 
   handleLoginSubmit(event){
+    event.preventDefault();
+
     const loginUrl = 'https://api.lucaspape.de/lucaspape/user/login';
 
-    axios.post(loginUrl, {username: this.state.username_input, password: this.state.password_input}).then(({data}) => {
+    axios.post(loginUrl,
+      {
+        username: this.state.username_input,
+        password: this.state.password_input
+      }
+    ).then(({data}) => {
       this.setState({updateRequired: true});
+    }).catch((e)=>{
+      console.log(e);
     });
   }
 
@@ -67,7 +76,7 @@ class Adminpage extends Component {
   generateLogin(){
     return(
       <div className='container-login'>
-        <form onSubmit={this.handleLoginSubmit}>
+        <form onSubmit={(event) => this.handleLoginSubmit(event)}>
           <label>
             Username:
             <input type="text" value={this.state.username_input} onChange={this.handleUsernameInputChange}/>

@@ -9,6 +9,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 const database = require('./database.js');
 database.connect((err)=>{
     if(err){
@@ -19,8 +25,6 @@ database.connect((err)=>{
       });
 
       app.get(PREFIX + 'posts', (req, res) => {
-        res.header("Access-Control-Allow-Origin", "*");
-
         var {skip, limit} = req.query;
 
         if(!skip){
@@ -51,8 +55,6 @@ database.connect((err)=>{
       });
 
       app.post(PREFIX + 'posts', (req, res) => {
-        res.header("Access-Control-Allow-Origin", "*");
-
         database.checkPermissions(req.cookies.sid, (err, result) => {
           if(err){
             res.status(500).send("Internal Server Error");
@@ -72,8 +74,6 @@ database.connect((err)=>{
       });
 
       app.get(PREFIX + 'user', (req, res) => {
-        res.header("Access-Control-Allow-Origin", "*");
-
         database.getUser(req.cookies.sid, (err, result) => {
           if(err){
             console.log(err);
@@ -85,8 +85,6 @@ database.connect((err)=>{
       });
 
       app.post(PREFIX + 'user/login', (req, res) => {
-        res.header("Access-Control-Allow-Origin", "*");
-
         database.login(req.body.username, req.body.password, (err, result)=>{
           if(err){
             console.log(err);
@@ -99,8 +97,6 @@ database.connect((err)=>{
       });
 
       app.post(PREFIX + 'user/register', (req, res) => {
-        res.header("Access-Control-Allow-Origin", "*");
-
         database.register(req.body.username, req.body.password, (err, result)=>{
           if(err){
             console.log(err);
