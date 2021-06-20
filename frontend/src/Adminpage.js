@@ -49,7 +49,7 @@ class Adminpage extends Component {
     if(this.state.updateRequired){
       const userUrl = 'https://api.lucaspape.de/lucaspape/user';
 
-      axios.get(userUrl).then(({data}) => {
+      axios.get(userUrl, {withCredentials: true}).then(({data}) => {
         this.setState({user: data.results, updateRequired: false});
       });
     }
