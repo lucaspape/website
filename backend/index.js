@@ -91,7 +91,7 @@ database.connect((err)=>{
 
             res.status(500).send("Internal Server Error");
           }else{
-            res.cookie('sid', result.sid, {maxAge: 900000, httpOnly:true}).send('Success');
+            res.cookie('sid', result.sid, {maxAge: 900000, httpOnly:false}).send('Success');
           }
         });
       });
