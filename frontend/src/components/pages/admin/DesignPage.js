@@ -1,4 +1,5 @@
 import ManagablePage from './components/ManagablePage.js';
+import NewPage from './components/NewPage.js';
 
 import React, { Component } from "react";
 
@@ -32,7 +33,8 @@ class DesignPage extends Component {
 
     if(this.state.user.id){
       return(
-        <div>
+        <div className="content">
+          <NewPage/>
           {this.state.managablePages}
         </div>
       );
