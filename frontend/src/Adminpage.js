@@ -5,6 +5,14 @@ import React, { Component } from "react"
 const axios = require('axios');
 
 class Adminpage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleUsernameInputChange = this.handleUsernameInputChange.bind(this);
+    this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+  }
+
   state = {
     user: [],
     updateRequired: true,
