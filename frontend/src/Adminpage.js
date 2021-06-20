@@ -7,8 +7,26 @@ const axios = require('axios');
 class Adminpage extends Component {
   state = {
     user: [],
-    updateRequired: true
+    updateRequired: true,
+    usrname_input: '',
+    password_input: ''
   };
+
+  handleUsernameInputChange(event){
+    this.setState({username_input: event.target.value});
+  }
+
+  handlePasswordInputChange(event){
+    this.setState({password_input: event.target.value});
+  }
+
+  handleLoginSubmit(event){
+    const loginUrl = 'https://api.lucaspape.de/lucaspape/user/login';
+
+    axios.post(loginUrl, {username: this.state.username_input, password: this.state.password_input}).then(({data}) => {
+      this.setState({updateRequired: true});
+    });
+  }
 
   render(){
     if(this.state.updateRequired){
@@ -41,7 +59,19 @@ class Adminpage extends Component {
   generateLogin(){
     return(
       <div className='container-login'>
-        LOGIN
+        <form onSubmit={this.handleLoginSubmit}>
+          <label>
+            Username:
+            <input type="text" value={this.state.username_input} onChange={this.handleUsernameInputChange}/>
+          </label>
+
+          <label>
+            Password:
+            <input type="text" value={this.state.password_input} onChange={this.handlePasswordInputChange}/>
+          </label>
+
+          <input type="submit" value="Login" />
+        </form>
       </div>
     );
   }
