@@ -11,10 +11,15 @@
   margin: auto;
 }
 
+@media (max-width: 750px) {
+  .feed div{
+    width: 90%;
+  }
+}
+
 .feed .post_text{
   margin-top: 50px;
 }
-
 
 .feed .post_image img{
   position: relative;
