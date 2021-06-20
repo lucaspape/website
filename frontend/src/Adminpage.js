@@ -1,10 +1,12 @@
 import './homepage.css'
 
-import React from 'react';
+import React, { Component } from "react"
+
+const axios = require('axios');
 
 class Adminpage extends Component {
   state = {
-    user: undefined,
+    user: [],
     updateRequired: true
   };
 
@@ -12,23 +14,23 @@ class Adminpage extends Component {
     if(this.state.updateRequired){
       const userUrl = 'https://api.lucaspape.de/lucaspape/user';
 
-      axios.get(postsUrl).then(({data}) => {
+      axios.get(userUrl).then(({data}) => {
         this.setState({user: data.results, updateRequired: false});
       });
     }
 
     return (
       <div className='container-fluid'>
-        { generateUser(); }
+        { this.generateUser() }
       </div>
     );
   };
 
   generateUser(){
-    if(this.state.user){
+    if(this.state.user && this.state.user.length > 0){
       return(
         <div>
-          Username: this.state.name
+          Username: {this.state.user.name}
         </div>
       );
     }else{
