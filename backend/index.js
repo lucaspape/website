@@ -20,7 +20,8 @@ database.connect((err)=>{
         res.send('Hello World');
       });
 
-      app.get(PREFIX + 'posts', (req, res) => {
+      app.get(PREFIX + 'posts/:pageId', (req, res) => {
+        const pageId = req.params.pageId;
         var {skip, limit} = req.query;
 
         if(!skip){
@@ -35,7 +36,7 @@ database.connect((err)=>{
           limit = parseInt(limit);
         }
 
-        database.getPosts(skip,limit, (err, results) => {
+        database.getPosts(pageId, skip,limit, (err, results) => {
           if(err){
             console.log(err);
 
@@ -50,12 +51,12 @@ database.connect((err)=>{
         });
       });
 
-      app.post(PREFIX + 'posts', (req, res) => {
+      app.post(PREFIX + 'posts/:pageId', (req, res) => {
         database.checkPermissions(req.cookies.sid, (err, result) => {
           if(err){
             res.status(500).send("Internal Server Error");
           }else if(result.includes('create_post')){
-            database.insertPost(req.body.author, req.body.content_type, req.body.content, (err,result) => {
+            database.insertPost(req.params.pageId, req.body.author, req.body.content_type, req.body.content, (err,result) => {
               if(err){
                 console.log(err);
                 res.status(500).send("Internal Server Error");

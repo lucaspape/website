@@ -11,7 +11,7 @@ const mysqlConnection = mysql.createConnection({
   });
 
 function createTables(callback){
-  const CREATE_POSTS_TABLE = 'CREATE TABLE IF NOT EXISTS `' + DBNAME + '`.`posts` (`id` VARCHAR(36), `timestamp` TIMESTAMP, `author` TEXT, `content_type` TEXT, `content` TEXT, PRIMARY KEY(`id`))';
+  const CREATE_POSTS_TABLE = 'CREATE TABLE IF NOT EXISTS `' + DBNAME + '`.`posts` (`id` VARCHAR(36), `pageId` TEXT, `timestamp` TIMESTAMP, `author` TEXT, `content_type` TEXT, `content` TEXT, PRIMARY KEY(`id`))';
 
   const CREATE_USERS_TABLE = 'CREATE TABLE IF NOT EXISTS `' + DBNAME + '`.`users` (`id` VARCHAR(36), `name` TEXT, `password` TEXT, `permissions` TEXT, PRIMARY KEY(`id`), UNIQUE KEY(`name`))';
 
@@ -53,16 +53,16 @@ module.exports = {
     });
   },
 
-  getPosts: function(skip, limit, callback){
-    const POSTS_QUERY = 'SELECT * FROM `' + DBNAME + '`.`posts` ORDER BY timestamp DESC LIMIT ' + mysqlConnection.escape(skip) + ', ' + mysqlConnection.escape(limit) + ';';
+  getPosts: function(skip, limit, pageId, callback){
+    const POSTS_QUERY = 'SELECT * FROM `' + DBNAME + '`.`posts` ORDER BY timestamp DESC LIMIT ' + mysqlConnection.escape(skip) + ', ' + mysqlConnection.escape(limit) + ' WHERE pageId = "' + pageId + '";';
 
     mysqlConnection.query(POSTS_QUERY, callback);
   },
 
-  insertPost: function(author, content_type, content, callback){
+  insertPost: function(pageId, author, content_type, content, callback){
     const ID = uuidv4();
 
-    const INSERT_POST_QUERY = 'INSERT INTO `' + DBNAME + '`.`posts` (id, author, content_type, content) values ("' + ID + '","' + author + '","' + content_type + '","' + content + '");';
+    const INSERT_POST_QUERY = 'INSERT INTO `' + DBNAME + '`.`posts` (id, pageId, author, content_type, content) values ("' + ID + '","' + pageId + '","' + author + '","' + content_type + '","' + content + '");';
 
     mysqlConnection.query(INSERT_POST_QUERY, callback);
   },

@@ -21,7 +21,9 @@ class PageNavigation extends Component {
     const listItems = [];
 
     this.props.pages.forEach((page) => {
-      listItems.push(<li><Link to={page.uri}>{page.name}</Link></li>);
+      if(page.in_menu === undefined || page.in_menu === true){
+        listItems.push(<li><Link to={'/' + page.uri}>{page.name}</Link></li>);
+      }
     });
 
     return listItems;

@@ -6,8 +6,8 @@ import {
 
 import PageWrapper from './PageWrapper.js';
 
-import HomePage from './pages/HomePage.js';
-import AdminPage from './pages/AdminPage.js';
+import AdminPage from './pages/admin/AdminPage.js';
+import DesignPage from './pages/admin/DesignPage.js';
 import GenericPage from './pages/GenericPage.js';
 
 const axios = require('axios');
@@ -41,8 +41,8 @@ class MainPage extends Component {
     axios.get(pagesUrl).then(({data}) => {
       const newPages = [];
 
-      newPages.push({name: 'Home', uri: '/'});
-      newPages.push({name: 'Admin', uri: '/admin'});
+      newPages.push({name: 'Admin', uri: 'admin', contentPage:AdminPage, in_menu:false});
+      newPages.push({name: 'Design', uri: 'admin/design', contentPage:DesignPage, in_menu:false});
 
       data.results.forEach((page) => {
         newPages.push(page);
@@ -58,10 +58,8 @@ class MainPage extends Component {
     const newPageRoutes = [];
 
     this.state.pages.forEach((page) => {
-      if(page.name == 'Home'){
-        newPageRoutes.push(<Route exact path = {page.uri} render={ (props) => <PageWrapper pages={this.state.pages} content={HomePage} {...props}/>}></Route>);
-      }else if(page.name == 'Admin'){
-        newPageRoutes.push(<Route exact path = {page.uri} render={ (props) => <PageWrapper pages={this.state.pages} content={AdminPage} {...props}/>}></Route>);
+      if(page.contentPage){
+        newPageRoutes.push(<Route exact path = {'/' + page.uri} render={ (props) => <PageWrapper pages={this.state.pages} id={page.id} name={page.name} content={page.contentPage} {...props}/>}/>);
       }else{
         newPageRoutes.push(<Route exact path = {'/' + page.uri} render={ (props) => <PageWrapper pages={this.state.pages} id={page.id} name={page.name} content={GenericPage} {...props}/>}/>);
       }
