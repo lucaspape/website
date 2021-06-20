@@ -3,6 +3,8 @@ import './homepage.css'
 import React, { Component } from "react"
 
 const axios = require('axios');
+const axiosCookieJarSupport = require('axios-cookiejar-support').default;
+const tough = require('tough-cookie');
 
 class Adminpage extends Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class Adminpage extends Component {
     usrname_input: '',
     password_input: ''
   };
+
+  cookieJar = new tough.CookieJar();
 
   handleUsernameInputChange(event){
     this.setState({username_input: event.target.value});
@@ -37,6 +41,10 @@ class Adminpage extends Component {
       {
         username: this.state.username_input,
         password: this.state.password_input
+      },
+      {
+        jar: this.cookieJar,
+        withCredentials: true
       }
     ).then(({data}) => {
       this.setState({updateRequired: true});
@@ -49,7 +57,7 @@ class Adminpage extends Component {
     if(this.state.updateRequired){
       const userUrl = 'https://api.lucaspape.de/lucaspape/user';
 
-      axios.get(userUrl, {withCredentials: true}).then(({data}) => {
+      axios.get(userUrl, {jar: this.cookieJar, withCredentials: true}).then(({data}) => {
         this.setState({user: data.results, updateRequired: false});
       });
     }
@@ -62,7 +70,7 @@ class Adminpage extends Component {
   };
 
   generateUser(){
-    if(this.state.user && this.state.user.length > 0){
+    if(this.state.user.id){
       return(
         <div>
           Username: {this.state.user.name}
