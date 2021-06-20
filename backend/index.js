@@ -87,7 +87,10 @@ database.connect((err)=>{
 
             res.status(500).send("Internal Server Error");
           }else{
-            res.cookie('sid', result.sid, {maxAge: 900000, httpOnly:false}).send('Success');
+            res.writeHead(200, {
+              'Set-Cookie': "sid=" + result.sid + '; HttpOnly',
+              'Access-Control-Allow-Credentials': 'true'
+            }).send('Success');
           }
         });
       });
