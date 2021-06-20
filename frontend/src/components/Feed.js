@@ -1,4 +1,4 @@
-import './feed.css'
+import '../css/feed.css'
 
 import React, { Component } from "react"
 

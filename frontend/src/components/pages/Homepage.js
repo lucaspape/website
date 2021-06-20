@@ -1,8 +1,8 @@
-import './homepage.css'
+import '../../css/homepage.css'
 
 import React from 'react';
 
-import Feed from './Feed.js';
+import Feed from '../Feed.js';
 
 function Homepage() {
   return (

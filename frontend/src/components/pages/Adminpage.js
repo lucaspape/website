@@ -1,6 +1,6 @@
-import './homepage.css'
+import '../../css/homepage.css'
 import React, { Component } from "react"
-import NewPost from './NewPost.js';
+import NewPost from '../NewPost.js';
 
 const axios = require('axios');
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;

@@ -1,4 +1,4 @@
-import './App.css';
+import './css/App.css';
 
 import React from 'react';
 import {
@@ -6,8 +6,8 @@ import {
   Route
 } from 'react-router-dom';
 
-import Homepage from './Homepage.js'
-import Adminpage from './Adminpage.js'
+import Homepage from './components/pages/Homepage.js'
+import Adminpage from './components/pages/Adminpage.js'
 
 function App() {
   return (
