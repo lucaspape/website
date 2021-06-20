@@ -9,7 +9,7 @@ const PREFIX = '/lucaspape/';
 const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({origin: '*', credentials: true}));
 
 const database = require('./database.js');
 database.connect((err)=>{
