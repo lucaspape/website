@@ -1,56 +1,16 @@
 import React, { Component } from "react";
 import NewPost from '../NewPost.js';
+import Login from '../Login.js';
 
 const axios = require('axios');
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
 
 class AdminPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleUsernameInputChange = this.handleUsernameInputChange.bind(this);
-    this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-  }
-
   state = {
     user: [],
-    updateRequired: true,
-    usrname_input: '',
-    password_input: ''
+    updateRequired: true
   };
-
-  cookieJar = new tough.CookieJar();
-
-  handleUsernameInputChange(event){
-    this.setState({username_input: event.target.value});
-  }
-
-  handlePasswordInputChange(event){
-    this.setState({password_input: event.target.value});
-  }
-
-  handleLoginSubmit(event){
-    event.preventDefault();
-
-    const loginUrl = 'https://api.lucaspape.de/lucaspape/user/login';
-
-    axios.post(loginUrl,
-      {
-        username: this.state.username_input,
-        password: this.state.password_input
-      },
-      {
-        jar: this.cookieJar,
-        withCredentials: true
-      }
-    ).then(({data}) => {
-      this.setState({updateRequired: true});
-    }).catch((e)=>{
-      console.log(e);
-    });
-  }
 
   render(){
     if(this.state.updateRequired){
@@ -74,32 +34,16 @@ class AdminPage extends Component {
         <div>
           Username: {this.state.user.name}
 
-          {<NewPost></NewPost>}
+          {<NewPost/>}
         </div>
       );
     }else{
-      return this.generateLogin();
+      return(
+        <Login update={()=>{
+          this.setState({updateRequired: true});
+        }}/>
+      );
     }
-  }
-
-  generateLogin(){
-    return(
-      <div className='container-login'>
-        <form onSubmit={(event) => this.handleLoginSubmit(event)}>
-          <label>
-            Username:
-            <input type="text" value={this.state.username_input} onChange={this.handleUsernameInputChange}/>
-          </label>
-
-          <label>
-            Password:
-            <input type="text" value={this.state.password_input} onChange={this.handlePasswordInputChange}/>
-          </label>
-
-          <input type="submit" value="Login" />
-        </form>
-      </div>
-    );
   }
 }
 
