@@ -8,6 +8,7 @@ class NewPost extends Component {
   constructor(props) {
     super(props);
 
+    this.handlePageIdInputChange = this.handlePageIdInputChange.bind(this);
     this.handleAuthorNameInputChange = this.handleAuthorNameInputChange.bind(this);
     this.handleContentTypeInputChange = this.handleContentTypeInputChange.bind(this);
     this.handleContentInputChange = this.handleContentInputChange.bind(this);
@@ -15,12 +16,17 @@ class NewPost extends Component {
   }
 
   state = {
+    page_id_input: '',
     author_name_input: '',
     content_type_input: '',
     content_input: ''
   }
 
   cookieJar = new tough.CookieJar();
+
+  handlePageIdInputChange(event){
+    this.setState({page_id_input: event.target.value});
+  }
 
   handleAuthorNameInputChange(event){
     this.setState({author_name_input: event.target.value});
@@ -37,7 +43,7 @@ class NewPost extends Component {
   handlePostSubmit(event){
     event.preventDefault();
 
-    const loginUrl = 'https://api.lucaspape.de/lucaspape/posts';
+    const loginUrl = 'https://api.lucaspape.de/lucaspape/posts/' + this.state.page_id_input;
 
     axios.post(loginUrl,
       {
@@ -60,6 +66,11 @@ class NewPost extends Component {
     return (
       <div>
         <form onSubmit={(event) => this.handlePostSubmit(event)}>
+          <label>
+            Page ID:
+            <input type="text" value={this.state.page_id_input} onChange={this.handlePageIdInputChange}/>
+          </label>
+
           <label>
             Author name:
             <input type="text" value={this.state.author_name_input} onChange={this.handleAuthorNameInputChange}/>

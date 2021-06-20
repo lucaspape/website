@@ -1,3 +1,5 @@
+import '../../css/generic_page.css';
+
 import React, { Component } from "react";
 
 const axios = require('axios');

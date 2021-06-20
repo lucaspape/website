@@ -1,4 +1,4 @@
-.feed div{
+.content div{
   position: relative;
   display: block;
 
@@ -17,11 +17,11 @@
   }
 }
 
-.feed .post_text{
+.content .post_text{
   margin-top: 50px;
 }
 
-.feed .post_image img{
+.content .post_image img{
   position: relative;
   width: 100%;
   height: auto;
