@@ -1,4 +1,3 @@
-import '../../../../css/new_post.css';
 import React, { Component } from "react";
 
 const axios = require('axios');
@@ -84,7 +83,7 @@ class NewPost extends Component {
       <div>
         <form className="input_form" onSubmit={(event) => this.handlePostSubmit(event)}>
           <label>
-            Page ID:
+            Page:
             {this.generatePageSelector()}
           </label>
 
@@ -113,6 +112,8 @@ class NewPost extends Component {
   generatePageSelector(){
     const options = [];
 
+    options.push(<option value="" selected disabled hidden>Choose Page</option>);
+
     this.state.pages.forEach((page) => {
       options.push(<option value={page.id}>{page.name}</option>);
     });
@@ -129,6 +130,8 @@ class NewPost extends Component {
     const options_text = ["text", "image_url"];
 
     const options = [];
+
+    options.push(<option value="" selected disabled hidden>Choose Content-Type</option>);
 
     options_text.forEach((item, i) => {
       options.push(<option value={item}>{options_description[i]}</option>);

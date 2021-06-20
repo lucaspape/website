@@ -1,3 +1,5 @@
+import '../../../css/admin.css';
+
 import React, { Component } from "react";
 import NewPost from './components/NewPost.js';
 import Login from './components/Login.js';
