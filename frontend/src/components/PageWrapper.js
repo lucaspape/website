@@ -1,4 +1,6 @@
-import React, { Component } from "react"
+import '../css/page.css';
+
+import React, { Component } from "react";
 
 import PageNavigation from './PageNavigation.js';
 

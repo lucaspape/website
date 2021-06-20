@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 
 const axios = require('axios');
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;

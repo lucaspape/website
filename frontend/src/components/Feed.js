@@ -1,6 +1,6 @@
-import '../css/feed.css'
+import '../css/feed.css';
 
-import React, { Component } from "react"
+import React, { Component } from "react";
 
 const axios = require('axios');
 

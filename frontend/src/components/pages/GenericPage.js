@@ -1,9 +1,9 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 
 class GenericPage extends Component {
   render(){
     return(
-      <div className="container-page">
+      <div className="content">
         Id: {this.props.id}
       </div>
     );

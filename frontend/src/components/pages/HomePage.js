@@ -1,12 +1,10 @@
-import '../../css/homepage.css'
-
 import React from 'react';
 
 import Feed from '../Feed.js';
 
 function HomePage() {
   return (
-    <div className='container-page'>
+    <div className='content'>
       <Feed/>
     </div>
   );

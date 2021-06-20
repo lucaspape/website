@@ -1,5 +1,4 @@
-import '../../css/homepage.css'
-import React, { Component } from "react"
+import React, { Component } from "react";
 import NewPost from '../NewPost.js';
 
 const axios = require('axios');
@@ -63,7 +62,7 @@ class AdminPage extends Component {
     }
 
     return (
-      <div className='container-page'>
+      <div className='content'>
         { this.generateUser() }
       </div>
     );

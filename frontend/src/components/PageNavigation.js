@@ -1,4 +1,6 @@
-import React, { Component } from "react"
+import '../css/navigation.css';
+
+import React, { Component } from "react";
 
 import {
     Link
@@ -7,7 +9,7 @@ import {
 class PageNavigation extends Component {
   render(){
     return(
-      <nav className="pageNavigation">
+      <nav className="navigation">
         <ul>
           {this.generateListItems()}
         </ul>
