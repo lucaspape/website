@@ -36,7 +36,7 @@ class AdminPage extends Component {
         <div>
           Username: {this.state.user.name}
 
-          {<NewPost/>}
+          {<NewPost username={this.state.user.name}/>}
         </div>
       );
     }else{

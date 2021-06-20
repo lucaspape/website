@@ -17,9 +17,11 @@ class NewPost extends Component {
 
   state = {
     page_id_input: '',
-    author_name_input: '',
+    author_name_input: this.props.username,
     content_type_input: '',
-    content_input: ''
+    content_input: '',
+    pages: [],
+    updateRequired: true
   }
 
   cookieJar = new tough.CookieJar();
@@ -63,12 +65,26 @@ class NewPost extends Component {
   }
 
   render(){
+    if(this.state.updateRequired){
+      const pagesUrl = 'https://api.lucaspape.de/lucaspape/pages';
+
+      axios.get(pagesUrl).then(({data}) => {
+        const newPages = [];
+
+        data.results.forEach((page) => {
+          newPages.push(page);
+        });
+
+        this.setState({pages:newPages, updateRequired: false});
+      });
+    }
+
     return (
       <div>
         <form onSubmit={(event) => this.handlePostSubmit(event)}>
           <label>
             Page ID:
-            <input type="text" value={this.state.page_id_input} onChange={this.handlePageIdInputChange}/>
+            {this.generatePageSelector()}
           </label>
 
           <label>
@@ -78,7 +94,7 @@ class NewPost extends Component {
 
           <label>
             Content-Type:
-            <input type="text" value={this.state.content_type_input} onChange={this.handleContentTypeInputChange}/>
+            {this.generateContentTypeSelector()}
           </label>
 
           <label>
@@ -90,7 +106,39 @@ class NewPost extends Component {
         </form>
       </div>
     );
+
   };
+
+  generatePageSelector(){
+    const options = [];
+
+    this.state.pages.forEach((page) => {
+      options.push(<option value={page.id}>{page.name}</option>);
+    });
+
+    return(
+      <select value={this.state.page_id_input} onChange={this.handlePageIdInputChange}>
+        {options}
+      </select>
+    );
+  }
+
+  generateContentTypeSelector(){
+    const options_description = ["Text", "Image URL"];
+    const options_text = ["text", "image_url"];
+
+    const options = [];
+
+    options_text.forEach((item, i) => {
+      options.push(<option value={item}>{options_description[i]}</option>);
+    });
+
+    return(
+      <select value={this.state.content_type_input} onChange={this.handleContentTypeInputChange}>
+        {options}
+      </select>
+    );
+  }
 }
 
 export default NewPost;
