@@ -1,3 +1,5 @@
+import ManagablePage from './components/ManagablePage.js';
+
 import React, { Component } from "react";
 
 const axios = require('axios');
@@ -7,7 +9,8 @@ const tough = require('tough-cookie');
 class DesignPage extends Component {
   state = {
     user: [],
-    updateRequired: true
+    updateRequired: true,
+    managablePages: []
   };
 
   cookieJar = new tough.CookieJar();
@@ -17,14 +20,20 @@ class DesignPage extends Component {
       const userUrl = 'https://api.lucaspape.de/lucaspape/user';
 
       axios.get(userUrl, {jar: this.cookieJar, withCredentials: true}).then(({data}) => {
+        const pagesUrl = 'https://api.lucaspape.de/lucaspape/pages';
+
         this.setState({user: data.results, updateRequired: false});
+
+        axios.get(pagesUrl).then(({data}) => {
+          this.generateManagablePages(data.results);
+        });
       });
     }
 
     if(this.state.user.id){
       return(
         <div>
-          OK
+          {this.state.managablePages}
         </div>
       );
     }else{
@@ -34,6 +43,18 @@ class DesignPage extends Component {
         </div>
       );
     }
+  }
+
+  generateManagablePages(pages){
+    const newManagablePages = [];
+
+    pages.forEach((page) => {
+      newManagablePages.push(<ManagablePage page={page} update={()=>{
+        this.setState({updateRequired: true});
+      }}/>);
+    });
+
+    this.setState({managablePages: newManagablePages});
   }
 }
 

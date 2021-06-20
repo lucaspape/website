@@ -154,6 +154,25 @@ database.connect((err)=>{
         });
       });
 
+      app.delete(PREFIX + 'pages/:pageId', (req, res) => {
+        database.checkPermissions(req.cookies.sid, (err, result) => {
+          if(err){
+            res.status(500).send("Internal Server Error");
+          }else if(result.includes('create_post')){
+            database.deletePage(req.params.pageId, (err,result) => {
+              if(err){
+                console.log(err);
+                res.status(500).send("Internal Server Error");
+              }else{
+                res.send('Success');
+              }
+            });
+          }else{
+            res.status(500).send("No Permission");
+          }
+        });
+      });
+
       app.listen(PORT, () => {
         console.log('Server started on port ' + PORT);
       });
