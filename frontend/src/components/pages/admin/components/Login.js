@@ -51,8 +51,8 @@ class Login extends Component {
 
   render(){
     return(
-      <div className='container-login'>
-        <form onSubmit={(event) => this.handleLoginSubmit(event)}>
+      <div>
+        <form className='input_form' onSubmit={(event) => this.handleLoginSubmit(event)}>
           <label>
             Username:
             <input type="text" value={this.state.username_input} onChange={this.handleUsernameInputChange}/>

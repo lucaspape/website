@@ -1,3 +1,4 @@
+import '../../../../css/new_post.css';
 import React, { Component } from "react";
 
 const axios = require('axios');
@@ -81,7 +82,7 @@ class NewPost extends Component {
 
     return (
       <div>
-        <form onSubmit={(event) => this.handlePostSubmit(event)}>
+        <form className="input_form" onSubmit={(event) => this.handlePostSubmit(event)}>
           <label>
             Page ID:
             {this.generatePageSelector()}
