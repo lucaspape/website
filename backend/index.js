@@ -104,6 +104,55 @@ database.connect((err)=>{
         });
       });
 
+      app.get(PREFIX + 'pages', (req, res) => {
+        var {skip, limit} = req.query;
+
+        if(!skip){
+          skip = 0;
+        }else{
+          skip = parseInt(skip);
+        }
+
+        if(!limit){
+          limit = 50;
+        }else{
+          limit = parseInt(limit);
+        }
+
+        database.getPages(skip,limit, (err, results) => {
+          if(err){
+            console.log(err);
+
+            res.status(500).send("Internal Server Error");
+          }else{
+            res.send(
+              {
+                results: results
+              }
+            );
+          }
+        });
+      });
+
+      app.post(PREFIX + 'pages', (req, res) => {
+        database.checkPermissions(req.cookies.sid, (err, result) => {
+          if(err){
+            res.status(500).send("Internal Server Error");
+          }else if(result.includes('create_post')){
+            database.insertPage(req.body.uri, req.body.name, (err,result) => {
+              if(err){
+                console.log(err);
+                res.status(500).send("Internal Server Error");
+              }else{
+                res.send('Success');
+              }
+            });
+          }else{
+            res.status(500).send("No Permission");
+          }
+        });
+      });
+
       app.listen(PORT, () => {
         console.log('Server started on port ' + PORT);
       });

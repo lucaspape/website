@@ -17,6 +17,8 @@ function createTables(callback){
 
   const CREATE_SESSION_TABLE = 'CREATE TABLE IF NOT EXISTS `' + DBNAME + '`.`sessions` (`id` VARCHAR(36), `username` TEXT, PRIMARY KEY(`id`))';
 
+  const CREATE_PAGES_TABLE = 'CREATE TABLE IF NOT EXISTS `' + DBNAME + '`.`pages` (`id` VARCHAR(36), `uri` TEXT, `name` TEXT, PRIMARY KEY(`id`))';
+
   mysqlConnection.query(CREATE_POSTS_TABLE, (err, result) => {
     if(err){
       callback(err);
@@ -26,7 +28,13 @@ function createTables(callback){
             callback(err);
           }else{
             mysqlConnection.query(CREATE_SESSION_TABLE, (err, result) => {
-              callback(err);
+              if(err){
+                callback(err);
+              }else{
+                mysqlConnection.query(CREATE_PAGES_TABLE, (err, result) => {
+                  callback(err);
+                });
+              }
             });
           }
         });
@@ -168,5 +176,19 @@ module.exports = {
         }
       }
     });
+  },
+
+  getPages: function(skip, limit, callback){
+    const PAGES_QUERY = 'SELECT * FROM `' + DBNAME + '`.`pages` LIMIT ' + mysqlConnection.escape(skip) + ', ' + mysqlConnection.escape(limit) + ';';
+
+    mysqlConnection.query(PAGES_QUERY, callback);
+  },
+
+  insertPage: function(uri, name, callback){
+    const ID = uuidv4();
+
+    const INSERT_PAGE_QUERY = 'INSERT INTO `' + DBNAME + '`.`pages` (id, uri, name) values ("' + ID + '","' + uri + '","' + name + '");';
+
+    mysqlConnection.query(INSERT_PAGE_QUERY, callback);
   }
 };

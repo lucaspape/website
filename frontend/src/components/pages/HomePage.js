@@ -4,12 +4,12 @@ import React from 'react';
 
 import Feed from '../Feed.js';
 
-function Homepage() {
+function HomePage() {
   return (
-    <div className='container-fluid'>
-      <Feed></Feed>
+    <div className='container-page'>
+      <Feed/>
     </div>
   );
 }
 
-export default Homepage;
+export default HomePage;

@@ -15,11 +15,11 @@ class Feed extends Component {
       const postsUrl = 'https://api.lucaspape.de/lucaspape/posts';
 
       axios.get(postsUrl).then(({data}) => {
-        var newPosts = [];
+        const newPosts = [];
 
-        for(var i=0; i<data.results.length; i++){
-          newPosts.push(this.generatePost(data.results[i]));
-        }
+        data.results.forEach((post) => {
+          newPosts.push(this.generatePost(post));
+        });
 
         this.setState({posts: newPosts, updateRequired: false});
       });

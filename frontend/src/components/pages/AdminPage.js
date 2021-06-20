@@ -6,7 +6,7 @@ const axios = require('axios');
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
 
-class Adminpage extends Component {
+class AdminPage extends Component {
   constructor(props) {
     super(props);
 
@@ -63,7 +63,7 @@ class Adminpage extends Component {
     }
 
     return (
-      <div className='container-fluid'>
+      <div className='container-page'>
         { this.generateUser() }
       </div>
     );
@@ -104,4 +104,4 @@ class Adminpage extends Component {
   }
 }
 
-export default Adminpage;
+export default AdminPage;
