@@ -12,6 +12,8 @@ class NewPost extends Component {
     this.handleAuthorNameInputChange = this.handleAuthorNameInputChange.bind(this);
     this.handleContentTypeInputChange = this.handleContentTypeInputChange.bind(this);
     this.handleContentInputChange = this.handleContentInputChange.bind(this);
+    this.handleFileUploadChange = this.handleFileUploadChange.bind(this);
+    this.handleFileUploadSubmit = this.handleFileUploadSubmit.bind(this);
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
   }
 
@@ -20,6 +22,7 @@ class NewPost extends Component {
     author_name_input: this.props.username,
     content_type_input: '',
     content_input: '',
+    selected_file_input: null,
     pages: [],
     updateRequired: true
   }
@@ -40,6 +43,27 @@ class NewPost extends Component {
 
   handleContentInputChange(event){
     this.setState({content_input: event.target.value});
+  }
+
+  handleFileUploadChange(event){
+    this.setState({selected_file_input: event.target.files[0]});
+  };
+
+  handleFileUploadSubmit(event){
+    event.preventDefault();
+
+    const data = new FormData();
+    data.append('file', this.state.selected_file_input);
+
+    axios.post('https://cdn.lucaspape.de/content/image', data,
+      {
+        jar: this.cookieJar,
+        withCredentials: true
+      }
+    ).then(({data}) => {
+      console.log(data.sha256);
+      this.setState({content_input: 'https://cdn.lucaspape.de/content/image/' + data.sha256});
+    });
   }
 
   handlePostSubmit(event){
@@ -81,6 +105,15 @@ class NewPost extends Component {
 
     return (
       <div>
+        <form className="input_form" onSubmit={(event) => this.handleFileUploadSubmit(event)}>
+          <label>
+            File Upload:
+            <input type='file' name='file' onChange={this.handleFileUploadChange}/>
+          </label>
+
+          <input type="submit" value="Upload File"/>
+        </form>
+
         <form className="input_form" onSubmit={(event) => this.handlePostSubmit(event)}>
           <label>
             Page:
@@ -99,7 +132,7 @@ class NewPost extends Component {
 
           <label>
             Content:
-            <input type="text" value={this.state.content} onChange={this.handleContentInputChange}/>
+            <input type="text" value={this.state.content_input} onChange={this.handleContentInputChange}/>
           </label>
 
           <input type="submit" value="Submit Post"/>
