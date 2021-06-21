@@ -4,6 +4,8 @@ const axios = require('axios');
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
 
+axiosCookieJarSupport(axios);
+
 class NewPage extends Component {
   constructor(props) {
     super(props);

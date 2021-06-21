@@ -46,13 +46,13 @@ class GenericPage extends Component {
     }else if(post.content_type === "image_url"){
       return(
         <div className='post_image'>
-          <img src={post.content}/>
+          <img src={post.content} alt=''/>
         </div>
       );
     }else if(post.content_type === "image_cdn"){
       return(
         <div className='post_image'>
-          <img src={this.getCdnImageUrl(post.content)}/>
+          <img src={this.getCdnImageUrl(post.content)} alt=''/>
         </div>
       );
     }
