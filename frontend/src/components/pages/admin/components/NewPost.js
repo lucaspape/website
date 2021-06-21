@@ -62,7 +62,7 @@ class NewPost extends Component {
       }
     ).then(({data}) => {
       console.log(data.sha256);
-      this.setState({content_input: 'https://cdn.lucaspape.de/content/image/' + data.sha256});
+      this.setState({content_input: data.sha256});
     });
   }
 
@@ -159,8 +159,8 @@ class NewPost extends Component {
   }
 
   generateContentTypeSelector(){
-    const options_description = ["Text", "Image URL"];
-    const options_text = ["text", "image_url"];
+    const options_description = ["Text", "Image URL", "CDN Image"];
+    const options_text = ["text", "image_url", "image_cdn"];
 
     const options = [];
 

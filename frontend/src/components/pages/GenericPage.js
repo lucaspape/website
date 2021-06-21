@@ -49,7 +49,17 @@ class GenericPage extends Component {
           <img src={post.content}/>
         </div>
       );
+    }else if(post.content_type === "image_cdn"){
+      return(
+        <div className='post_image'>
+          <img src={this.getCdnImageUrl(post.content)}/>
+        </div>
+      );
     }
+  }
+
+  getCdnImageUrl(hash){
+    return 'https://cdn-de1.lucaspape.de/content/image/' + hash;
   }
 }
 
