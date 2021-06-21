@@ -36,21 +36,27 @@ class MainPage extends Component {
   }
 
   generatePages(){
-    const pagesUrl = 'https://api.lucaspape.de/lucaspape/pages';
+    const getCdnProxyUrl = 'https://cdn.lucaspape.de/proxy';
 
-    axios.get(pagesUrl).then(({data}) => {
-      const newPages = [];
+    axios.get(getCdnProxyUrl).then(({data}) => {
+      window.$cdn = data.recommended;
 
-      newPages.push({name: 'Admin', uri: 'admin', contentPage:AdminPage, in_menu:false});
-      newPages.push({name: 'Design', uri: 'admin/design', contentPage:DesignPage, in_menu:false});
+      const pagesUrl = 'https://api.lucaspape.de/lucaspape/pages';
 
-      data.results.forEach((page) => {
-        newPages.push(page);
+      axios.get(pagesUrl).then(({data}) => {
+        const newPages = [];
+
+        newPages.push({name: 'Admin', uri: 'admin', contentPage:AdminPage, in_menu:false});
+        newPages.push({name: 'Design', uri: 'admin/design', contentPage:DesignPage, in_menu:false});
+
+        data.results.forEach((page) => {
+          newPages.push(page);
+        });
+
+        this.setState({pages:newPages});
+
+        this.generateCustomPageRoutes();
       });
-
-      this.setState({pages:newPages});
-
-      this.generateCustomPageRoutes();
     });
   }
 

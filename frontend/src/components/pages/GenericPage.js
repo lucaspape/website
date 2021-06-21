@@ -59,7 +59,7 @@ class GenericPage extends Component {
   }
 
   getCdnImageUrl(hash){
-    return 'https://cdn-de1.lucaspape.de/content/image/' + hash;
+    return window.$cdn + 'content/image/' + hash;
   }
 }
 
