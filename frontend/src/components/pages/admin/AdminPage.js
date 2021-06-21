@@ -5,10 +5,6 @@ import NewPost from './components/NewPost.js';
 import Login from './components/Login.js';
 
 const axios = require('axios');
-const axiosCookieJarSupport = require('axios-cookiejar-support').default;
-const tough = require('tough-cookie');
-
-axiosCookieJarSupport(axios);
 
 class AdminPage extends Component {
   state = {
@@ -16,13 +12,11 @@ class AdminPage extends Component {
     updateRequired: true
   };
 
-  cookieJar = new tough.CookieJar();
-
   render(){
     if(this.state.updateRequired){
       const userUrl = 'https://api.lucaspape.de/lucaspape/user';
 
-      axios.get(userUrl, {jar: this.cookieJar, withCredentials: true}).then(({data}) => {
+      axios.get(userUrl, {withCredentials: true}).then(({data}) => {
         this.setState({user: data.results, updateRequired: false});
       });
     }

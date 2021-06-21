@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 const axios = require('axios');
-const axiosCookieJarSupport = require('axios-cookiejar-support').default;
-const tough = require('tough-cookie');
-
-axiosCookieJarSupport(axios);
 
 class NewPost extends Component {
   constructor(props) {
@@ -28,8 +24,6 @@ class NewPost extends Component {
     pages: [],
     updateRequired: true
   }
-
-  cookieJar = new tough.CookieJar();
 
   handlePageIdInputChange(event){
     this.setState({page_id_input: event.target.value});
@@ -59,7 +53,6 @@ class NewPost extends Component {
 
     axios.post('https://cdn.lucaspape.de/content/image', data,
       {
-        jar: this.cookieJar,
         withCredentials: true
       }
     ).then(({data}) => {

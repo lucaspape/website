@@ -4,10 +4,6 @@ import NewPage from './components/NewPage.js';
 import React, { Component } from "react";
 
 const axios = require('axios');
-const axiosCookieJarSupport = require('axios-cookiejar-support').default;
-const tough = require('tough-cookie');
-
-axiosCookieJarSupport(axios);
 
 class DesignPage extends Component {
   state = {
@@ -15,8 +11,6 @@ class DesignPage extends Component {
     updateRequired: true,
     managablePages: []
   };
-
-  cookieJar = new tough.CookieJar();
 
   render(){
     if(this.state.updateRequired){

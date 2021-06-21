@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 const axios = require('axios');
-const axiosCookieJarSupport = require('axios-cookiejar-support').default;
-const tough = require('tough-cookie');
-
-axiosCookieJarSupport(axios);
 
 class Login extends Component {
   constructor(props) {
@@ -19,8 +15,6 @@ class Login extends Component {
     usrname_input: '',
     password_input: ''
   };
-
-  cookieJar = new tough.CookieJar();
 
   handleUsernameInputChange(event){
     this.setState({username_input: event.target.value});
@@ -41,7 +35,6 @@ class Login extends Component {
         password: this.state.password_input
       },
       {
-        jar: this.cookieJar,
         withCredentials: true
       }
     ).then(({data}) => {
