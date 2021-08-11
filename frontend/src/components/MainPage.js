@@ -12,7 +12,7 @@ import GenericPage from './pages/GenericPage.js';
 
 const axios = require('axios');
 
-const API_KEYS = require('../../api_keys.json')
+const API_KEYS = require('../api_keys.json')
 
 class MainPage extends Component {
   state = {
