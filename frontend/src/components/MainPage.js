@@ -12,6 +12,8 @@ import GenericPage from './pages/GenericPage.js';
 
 const axios = require('axios');
 
+const API_KEYS = require('../../api_keys.json')
+
 class MainPage extends Component {
   state = {
     updateRequired: true,
@@ -40,6 +42,8 @@ class MainPage extends Component {
 
     axios.get(getCdnProxyUrl).then(({data}) => {
       window.$cdn = data.recommended;
+      window.$get_key = API_KEYS.get;
+      window.$post_key = API_KEYS.post;
 
       const pagesUrl = 'https://api.lucaspape.de/lucaspape/pages';
 

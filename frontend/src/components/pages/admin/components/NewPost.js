@@ -51,7 +51,7 @@ class NewPost extends Component {
     const data = new FormData();
     data.append('file', this.state.selected_file_input);
 
-    axios.post('https://cdn.lucaspape.de/content/image', data,
+    axios.post('https://cdn.lucaspape.de/content/image?key=' + window.$post_key, data,
       {
         withCredentials: true
       }

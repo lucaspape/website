@@ -59,7 +59,7 @@ class GenericPage extends Component {
   }
 
   getCdnImageUrl(hash){
-    return window.$cdn + 'content/image/' + hash;
+    return window.$cdn + 'content/image/' + hash + '?key=' window.$get_key;
   }
 }
 
